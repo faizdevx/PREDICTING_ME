@@ -1,826 +1,600 @@
-# Can a machine learn who I am better than I can?
+# Can a Machine Learn Who I Am Better Than I Can?
 
-This question is not sci-fi drama.  
-It is the core of Machine Learning:
+This is not sci-fi drama.  
+This is the core question of **Machine Learning**:
 
 > **Can patterns from past data predict future behavior better than human reasoning?**  
-> When does this actually work, and when are we just fooling ourselves with math cosplay?
+> When does this succeed and when is it just math cosplay?
 
 ---
 
-# 1. WHAT “LEARNING” REALLY MEANS
+## PART I – WHAT LEARNING REALLY IS
 
-Learning is **not** memory.
+### What Learning Means
+
+Learning is **not memory**.
 
 > **Learning = turning experience into rules that still work tomorrow.**  
-> **Learning = making the best decisions when your data is incomplete and noisy.**
+> **Learning = making useful decisions with incomplete and noisy data.**
 
-So real learning means:
+So true learning is:
 
-- Not just storing answers  
+- Not storing answers  
 - Not hard-coding rules  
-- Finding patterns that survive new situations  
-
-In short:
+- Discovering patterns that **generalize to unseen situations**
 
 > **Real learning = generalization**
 
-### Bad vs Real Learning
+---
 
-**Bad learning:**
+### Bad Learning vs Real Learning
 
-- Memorize questions  
-- Ace the practice tests  
-- Fail the real exam  
-
-**Real learning:**
-
-- Understand the pattern  
-- Solve unseen problems  
-- Predict correctly on new data  
-
-### Pigeon vs Rat Analogy
-
-- **Superstition pigeon:** Remembers actions that worked once and blindly repeats  
-- **Smart rat:** Learns which behaviors actually change outcomes  
-
-ML tries to build **rats**, not pigeons.
+| Bad Learning | Real Learning |
+|----------------|----------------|
+| Memorizes answers | Learns patterns |
+| Perfect on practice | Works on new problems |
+| Zero thinking | Transferable understanding |
 
 ---
 
-# 2. THE ML PROBLEM SETUP
+### Pigeon vs Rat Analogy
 
-Every ML system has five actors.
+- **Pigeon:** repeats actions that once worked without understanding.
+- **Rat:** learns what actions actually change outcomes.
 
-### The Cast
+**ML aims to build rats, not pigeons.**
 
-| Symbol | Meaning                                          |
-|--------|--------------------------------------------------|
-| X      | Inputs (features like age, pixels, words)        |
-| Y      | Outputs (labels like price, spam / not spam)     |
-| D      | Real data in the wild (true distribution)        |
-| f      | True unknown rule of the universe                |
-| h      | Our guessed rule made by the model               |
+---
 
-### What We Get
+---
 
-A pile of known examples:
+## PART II – THE ML FORMAL SETUP
+
+Every learning system has the same cast:
+
+| Symbol | Meaning |
+|--------|---------|
+| X | Inputs (features like pixels, age, words) |
+| Y | Outputs (labels or targets) |
+| D | Real data distribution |
+| f | True unknown mapping |
+| h | Model approximation |
+
+### Data
 
 \[
-(x_1, y_1), (x_2, y_2), \dots , (x_m, y_m)
+(x_1, y_1), (x_2, y_2), ..., (x_m, y_m)
 \]
 
-### What We Build
-
-A model:
+### Model
 
 \[
 h: X \rightarrow Y
 \]
 
-### The Actual Mission
+### Goal
 
-Find an \( h \) that behaves like \( f \) on future samples drawn from \( D \).
-
-Plain translation:
-
-> **Predict unseen data correctly.**
-
----
-
-# 3. TWO ERRORS ALWAYS FIGHTING
-
-ML is a boxing match between two errors.
-
-### 1. Training Error
-
-> How bad is the model on what it already saw?
-
-Basically: did it memorize correctly?
-
-### 2. True Error
-
-> How bad will it be in real life?
-
-Did it generalize correctly?
-
-**The curse:**
-
-- You can make training error = 0  
-- Real world error can still be huge  
-
----
-
-# 4. FIRST BIG TRAP: OVERFITTING
-
-If a model is **infinitely flexible**:
-
-- ✅ Perfect training accuracy  
-- ❌ Useless predictions on new data  
-
-This is **overfitting**.
-
-What went wrong?
-
-The model:
-
-- Learned **noise**  
-- Instead of real structure  
-
-> Imagine memorizing every typo in a textbook and calling that “learning”.  
-> That is overfitting.
-
----
-
-# 5. ERM: EMPIRICAL RISK MINIMIZATION
-
-ERM is the basic ML strategy.
-
-### Rule
-
-From all allowed models \( H \), choose the one that makes the **fewest mistakes on training data**.
-
-Formally:
-
-> Pick \( h \in H \) that minimizes training loss \( L_S(h) \).
+> Learn \( h \) so it behaves like \( f \) on future samples from \( D \).
 
 Plain English:
 
-> Try a bunch of possible models and pick the one that best fits your examples.
+> Predict unseen data correctly.
 
 ---
 
-# 6. WHY RESTRICTIONS ARE NECESSARY
+---
 
-If you allow **any** model:
+## PART III – THE CORE TENSION
 
-- You get perfect memorization  
-- You get zero generalization  
-- You get garbage predictions  
+### Training Error
 
-So we **restrict** the models we allow.  
+Error on the data the model already saw.
 
-This restriction is called:
+### True Error
+
+Error on unseen real-world data.
+
+**Key danger:**
+
+> Training error can be zero while real-world error is huge.
+
+---
+
+### Overfitting
+
+Unlimited flexibility creates:
+
+- ✅ Perfect training fit  
+- ❌ Worthless predictions
+
+**Cause:** learning noise instead of structure.
+
+> Memorizing typos and calling it learning = overfitting.
+
+---
+
+---
+
+## PART IV – ERM AND INDUCTIVE BIAS
+
+### Empirical Risk Minimization (ERM)
+
+From model space \( H \), choose
+
+\[
+h = \arg \min L_S(h)
+\]
+
+Translation:
+
+> Pick the model that performs best on training data.
+
+---
+
+### Why Restrictions Are Necessary
+
+Allow all models → perfect memorization → no generalization.
+
+Constraint is required:
 
 ## Inductive Bias
 
-> **Bias = beliefs we force into the system before seeing data.**
+> **Bias = assumptions forced into the model before seeing data.**
 
-### Examples
+Examples:
 
-| Model Choice      | Bias Belief                                  |
-|-------------------|----------------------------------------------|
-| Linear regression | Reality is smooth and continuous             |
-| Decision trees    | Reality follows logical split rules          |
-| Small neural nets | Complex patterns built from simple shapes    |
-| CNNs              | Local image patterns matter                  |
+| Model | Implicit Belief |
+|------|------------------|
+| Linear regression | Reality is smooth |
+| Decision trees | Reality follows split rules |
+| CNNs | Local spatial patterns matter |
+| Transformers | Attention structure matters |
 
-Human translation:
-
-> **Your model choice is your worldview baked into code.**
+> **Your model choice = your worldview in code.**
 
 ---
 
-# 7. WHY “BIAS” IS GOOD
+### Why Bias Is Good
 
-**No bias:**
+| No Bias | Some Bias |
+|---------|------------|
+| Learns anything | Learns something real |
+| Understands nothing | Discovers structure |
 
-- Learns anything  
-- Understands nothing  
-
-**Some bias:**
-
-- Cannot learn everything  
-- Learns something real  
-
-> **Bias turns chaos into structure.**
+> **Bias turns chaos into meaning.**
 
 ---
 
-# 8. NO-FREE-LUNCH THEOREM
+---
 
-This is the brutal truth:
+## PART V – LIMITS OF LEARNING
 
-> **Without assumptions about the world, learning is impossible.**
+### No-Free-Lunch Theorem
 
-Every ML success assumes:
+> Without assumptions about reality, learning is impossible.
 
-- Patterns exist  
-- They are stable  
-- They are simpler than chaos  
+Learning requires believing:
 
-No assumptions  
-=  
-No learning
+- Patterns exist
+- They are stable
+- They are simpler than chaos
 
 ---
 
-# 9. WHEN DOES LEARNING ACTUALLY WORK? (PAC LEARNING)
+### PAC Learning
 
-PAC = **Probably Approximately Correct**.
+Learning is achievable if it is:
 
-Meaning: with enough data, learning can become:
+- **Probably** (high confidence)
+- **Approximately Correct** (small error)
 
-- **Accurate** (small error)  
-- **Reliable** (high confidence)  
+Formally:
 
-Formal goals:
+- Error ≤ \( \varepsilon \)
+- Confidence ≥ \( 1-\delta \)
 
-- Error ≤ \( \varepsilon \)  
-- Confidence ≥ \( 1 - \delta \)
+Data needed increases with:
 
-Required data depends on:
-
-- Model complexity  
-- Desired accuracy  
-- Desired confidence  
-
-Big model + high accuracy + high confidence  
-= **more data needed**
+- Model complexity
+- Desired accuracy
+- Desired confidence
 
 ---
 
-# 10. VC DIMENSION
+---
 
-VC dimension measures:
+## PART VI – CAPACITY AND MEMORIZATION
 
-> **How expressive a model is at separating data.**
+### VC Dimension
 
-### Definition
+Measures:
 
-VC dimension =
+> Maximum number of arbitrary labelings a model can handle.
 
-> The largest number of points a model can assign **all possible labelings** to without failing.
+Higher VC = more memorization ability.
 
-### Example
+Models:
 
-- Can handle every labeling of 2 points → VC ≥ 2  
-- Fails on some labeling of 3 points → VC = 2  
-
-Higher VC = more memorization power.
+- Deep trees → High VC
+- Neural networks → Massive VC
 
 ---
 
-# 11. VC BY MODELS
-
-### Decision Trees
-
-- More depth → more splits  
-- Can isolate every point  
-
-✅ Very high VC
-
-### Neural Networks
-
-- Ridiculously flexible  
-- Almost any mapping possible  
-
-✅ Massive VC
-
----
-
-# 12. SO ARE NEURAL NETWORKS POINTLESS?
+### Does High VC Make NNs Useless?
 
 No.
 
-High VC means:
+Capacity means:
 
 > **They can overfit, not that they must.**
 
-### Ferrari Analogy
+**Ferrari analogy:**
 
-- A Ferrari can go 300 km/h  
-- It does not explode every time you start it  
-
-Same logic:
-
-- Neural networks can memorize  
-- They do not have to
+Ferrari can go 300 km/hr but does not do so constantly.
 
 ---
 
-# 13. WHY NEURAL NETWORKS STILL WORK
+---
 
-### 1. Regularization
+## PART VII – WHY NEURAL NETWORKS WORK
 
-Techniques:
+**Despite high capacity:**
 
-- Weight decay  
-- Dropout  
-- Early stopping  
+1. **Regularization**  
+   Weight decay, dropout, early stopping
 
-These reduce effective complexity.
+2. **SGD Bias**  
+   Optimization prefers simpler solutions.
 
-### 2. SGD Bias
+3. **Architectural Bias**  
+   CNN locality, transformer attention constraints
 
-Stochastic Gradient Descent tends to prefer:
+4. **Scale**  
+   Big data stabilizes big models.
 
-- Simpler models  
-- Smooth solutions  
-- Small weights  
-
-### 3. Architectural Bias
-
-- CNNs enforce locality  
-- Transformers enforce attention patterns  
-
-These structures limit chaos.
-
-### 4. Data Scale
-
-- Small data + big net = disaster  
-- Big data + big net = magic  
-
-### 5. Training Dynamics
-
-Optimization itself often avoids crazy overfit solutions.
+5. **Training Path Dynamics**  
+   Optimization avoids extreme solutions.
 
 ---
 
-# 14. WHY VC THEORY IS NOT THE END
+### VC Is Not Enough
 
-VC measures:
+VC theory answers:
 
-> **Worst case** memorization power.
-
-Reality is about:
-
-> **Best case** pattern extraction via SGD.
-
-VC asks:
-
-> “What could the network memorize?”
+> What can a model memorize in worst cases?
 
 Reality asks:
 
-> “What does SGD actually learn on real datasets?”
+> What does SGD produce in typical cases?
 
-These answers are **not** the same.
-
----
-
-# 15. THE HONEST TRUTH
-
-Deep learning works because:
-
-> It lands in a sweet spot between **underfitting** and **overfitting**.
-
-Networks fail when:
-
-- Data is tiny  
-- Regularization is weak  
-- Architecture does not match problem  
-
-Networks succeed when:
-
-- Data is massive  
-- Constraints match physics or domain  
-- Training prefers simple solutions  
+These are not the same.
 
 ---
 
-# 16. QUICK TOUR OF SUPERVISED MODELS
+---
+
+## PART VIII – SUPERVISED METHODS
 
 ### Linear Models
 
-- Perceptron  
-- Linear regression  
-- Logistic regression  
+Perceptrons, linear and logistic regression.
 
-Idea:
+> Separating planes through data.
 
-> Draw a line or plane separating data.
+---
 
 ### Boosting
 
-Many weak models team up:
-
-1. Train a weak learner  
-2. Focus next learner on past mistakes  
-3. Combine outputs into one strong predictor  
+Sequential weak learners combine into strong predictors.
 
 ---
 
-# 17. MODEL SELECTION
+---
 
-You cannot trust training accuracy.
+## PART IX – MODEL SELECTION
 
-Proper evaluation uses:
+Training accuracy lies.
 
-- Validation set  
-- Cross-validation  
+Use:
+
+- Validation sets
+- Cross-validation
 
 Goal:
 
-> Balance simplicity vs flexibility.
+> Balance simplicity and expressivity.
 
 ---
 
-# 18. OPTIMIZATION
+---
 
-Most ML training solves:
+## PART X – OPTIMIZATION
+
+Models solve:
 
 \[
-\min (\text{loss} + \text{regularization})
+\min (\text{loss + regularization})
 \]
 
-### Regularization Types
+Regularization:
 
-| Type | Effect                    |
-|------|---------------------------|
-| L1   | Push weights to zero      |
-| L2   | Prevent extreme weights   |
-
-Both help stop overfitting.
+| Type | Effect |
+|------|----------|
+| L1 | Enforces sparsity |
+| L2 | Controls weight magnitude |
 
 ---
 
-# 19. SGD
+### SGD
 
-Why it dominates:
+Why used:
 
-- Handles giant datasets  
-- Trains fast  
-- Works in online settings  
-
-Idea:
-
-> Use small noisy gradient steps to walk downhill.  
-> Noise helps avoid some overfitting traps.
+- Scales to massive data
+- Fast convergence
+- Noise helps escape brittle solutions
 
 ---
 
-# 20. SUPPORT VECTOR MACHINES
+---
 
-### Goal
+## PART XI – OTHER MODELS
 
-> Maximize the **margin** between classes.
+### Support Vector Machines
 
-### Kernels
+Goal:
 
-- Map data into high dimensions  
-- Perform nonlinear learning without computing that space explicitly  
+> Maximize classification margin.
+
+Uses kernels for nonlinear boundaries.
 
 ---
 
-# 21. EXTENDED LEARNING MODES
+---
+
+## PART XII – BEYOND SUPERVISED LEARNING
 
 ### Online Learning
 
-- Data arrives continuously  
-- Performance judged by **regret**, not just accuracy  
-
-Goal:
-
-> Make fewer total mistakes over time.
+Streaming data. Success measured by **regret**, not accuracy.
 
 ---
 
 ### Clustering
 
-Unsupervised grouping.
-
-Examples:
-
-- k-means  
-- Spectral clustering  
-- Hierarchical clustering  
+k-means, spectral, hierarchical.
 
 ---
 
 ### Dimensionality Reduction
 
-Compress data without losing important structure.
-
-Techniques:
-
-- PCA  
-- Random projections  
+PCA, projections, embeddings.
 
 ---
 
 ### Generative Models
 
-Learn the data distribution:
+Learn:
 
 \[
 P(x)
 \]
 
-Instead of just:
+Instead of:
 
 \[
-P(y \mid x)
+P(y|x)
 \]
 
-Uses:
+Used for:
 
-- Anomaly detection  
-- Fake data generation  
-- Density estimation  
-
-Models:
-
-- Naive Bayes  
-- Gaussian Mixtures (EM)  
+- Data generation
+- Density estimation
+- Anomaly detection
 
 ---
 
-# 22. BAYESIAN VIEW AND DECISION THEORY
-
-So far we saw learning as generalization and capacity. Now the probabilistic angle.
-
-## Data → Probability → Models → Inference → Decisions
-
-### Input–Output View
-
-- Input \( x \) → features  
-- Output \( t \) → labels or targets  
-- Goal: learn \( f(x) \approx t \)  
-
-Where:
-
-- \( x \) is noisy  
-- \( t \) is imperfect  
-- \( f \) is unknown  
-
-So we:
-
-> Build a model that makes **good guesses on unseen data**.
-
 ---
 
-## Models Output Probabilities
+## PART XIII – BAYESIAN WORLDVIEW
 
-ML models do not output absolute truth.  
-They output:
+Flow:
+
+> Data → Probabilities → Models → Inference → Decisions
+
+Models predict distributions:
 
 \[
-P(\text{output} \mid \text{input})
+P(y|x)
 \]
-
-So we are always working with **uncertainty**.
 
 ---
 
-## Bayes Rule
+### Bayes Rule
 
 \[
-\text{Posterior} = \text{Likelihood} \times \text{Prior}
+Posterior \propto Likelihood \times Prior
 \]
 
-**Meaning:**
-
-- **Prior:** What you believed before seeing data  
-- **Likelihood:** How well the data supports that belief  
-- **Posterior:** What you believe after seeing data  
-
-Real learning is:
-
-> **Updating beliefs when evidence arrives.**
+Learning = belief updates from data.
 
 ---
 
-## Decision Theory
+### Decision Theory
 
-We do not just predict, we **act**.
+Predictions guide actions.
 
-Some errors are worse than others.
+Different errors carry different costs.
 
-Example: hospital
+Models optimize:
 
-- Missing cancer (false negative) is worse than a false alarm  
-
-So models should:
-
-> **Minimize expected loss, not just error count.**
+> Expected loss, not raw accuracy.
 
 ---
 
-# 23. CORE MODELS REVISITED (BISHOP STYLE)
+---
 
-## Linear Models
-
-They look simple but are powerful.
-
-Key idea:
-
-> **Linear in parameters ≠ linear in features**
-
-So polynomial functions still count as “linear models” in parameter space.
+## PART XIV – CORE MODELS
 
 ### Logistic Regression
 
-\[
-\sigma(w \cdot x) \rightarrow \text{Probability of class}
-\]
-
-This is the ancestor of many neural classifiers.
-
----
-
-## Bias–Variance Equation
-
-Total error splits into:
+Probability estimation via:
 
 \[
-\text{Error} = \text{Bias}^2 + \text{Variance} + \text{Noise}
+\sigma(w^T x)
 \]
 
-Interpretation:
+---
 
-- Bias = systematic stupidity  
-- Variance = instability  
-- Noise = unavoidable randomness  
+### Bias–Variance Decomposition
 
-This decides:
+\[
+Error = Bias^2 + Variance + Noise
+\]
 
-- How complex your model should be  
-- How much data you need  
+- Bias: oversimplification
+- Variance: instability
+- Noise: irreducible randomness
 
 ---
 
-## Neural Networks
+### Neural Networks
 
-They are not brains. They are:
+> Layered nonlinear functions trained by backpropagation.
 
-> Nonlinear functions stacked in layers.
+Failures:
 
-### Backpropagation
+- Overfitting
+- Vanishing gradients
 
-No mystery:
+Solutions:
 
-> Chain rule + gradient descent  
-
-Errors are pushed backwards to update weights.
-
-Problems:
-
-- Vanishing gradients  
-- Overfitting  
-- Local minima  
-
-Regularization fixes:
-
-- Weight decay  
-- Dropout  
-- Early stopping  
-
-Neural nets succeed mainly by:
-
-> **Managing complexity**, not by being magical.
+- Regularization
 
 ---
 
-## Kernels and SVM (Again, Bishop Angle)
+---
 
-Instead of explicit huge feature vectors:
+## PART XV – LATENT STRUCTURE
 
-> Use similarity functions to act as if you are in infinite dimensions.
+### EM Algorithm
 
-SVM insight:
+Iterative hidden variable estimation:
 
-- Do not care about all points  
-- Only **boundary points** matter  
-
-Learning power depends on:
-
-> Number of support vectors, not just feature dimension.
+- E-Step: infer hidden causes
+- M-Step: optimize parameters
 
 ---
 
-# 24. LATENT STRUCTURE (ACT 4)
+### KL Divergence
 
-## EM Algorithm
-
-Think detective:
-
-1. Guess hidden causes  
-2. Fit model to those guesses  
-3. Update guesses  
-4. Repeat  
-
-Formally:
-
-- **E-step:** Estimate hidden variables  
-- **M-step:** Optimize parameters  
-
-Used in:
-
-- Clustering  
-- Topic modeling  
-- Gaussian mixtures  
-- HMMs  
+Measures mismatch between probability beliefs.
 
 ---
 
-## KL Divergence
+### Graphical Models
 
-Instead of distance between numbers, KL measures:
-
-> How wrong your probability beliefs are compared to reality.
-
-Used in:
-
-- Loss functions  
-- Regularization  
-- Variational inference  
+Nodes = variables  
+Edges = dependencies
 
 ---
 
-## Graphical Models
+### PCA
 
-Complex probability is broken into networks:
+> High-D data lies on low-D manifolds.
 
-- Nodes = random variables  
-- Edges = dependencies  
-
-Instead of one huge joint distribution, we solve many smaller linked problems.
-
-This enables:
-
-- Bayesian networks  
-- Belief propagation  
-- Factor graphs  
+Lead to modern embeddings and VAEs.
 
 ---
 
-## PCA and Latent Variables
+---
 
-Key idea:
+## PART XVI – APPROXIMATE INFERENCE
 
-> High-dimensional data often lives on low-dimensional shapes.
+Exact Bayesian inference is intractable.
 
-PCA:
+Use:
 
-- Finds hidden axes of variation  
-- Compresses data  
-- Removes noise  
+### Variational Inference
 
-Probabilistic PCA becomes:
-
-> An ancestor of VAEs and modern embedding methods.
+Approximate posterior via optimization.
 
 ---
 
-# 25. APPROXIMATE INFERENCE (ACT 5)
+### MCMC
 
-Exact Bayesian inference is usually impossible.
-
-So we approximate.
-
-## Variational Inference
-
-Instead of perfect posterior:
-
-> Find the closest simple distribution.
-
-We turn inference into **optimization**.
-
-Used in:
-
-- VAEs  
-- Topic models  
-- Bayesian neural nets  
+Random walks through probability space.
 
 ---
 
-## MCMC Sampling
+---
 
-Forget closed-form solutions.
+## PART XVII – WHAT YOU ACTUALLY LEARN
 
-> Sample reality itself.
+You gain a worldview:
 
-You walk randomly through probability space and learn its shape.
-
-Examples:
-
-- Gibbs Sampling  
-- Metropolis–Hastings  
-- Hamiltonian Monte Carlo  
+- ML = probabilistic belief modeling
+- Learning = inference under uncertainty
+- Data is finite
+- Overfitting is self-deception
+- Regularization = discipline
 
 ---
 
-# 26. WHAT YOU ACTUALLY GAIN FROM THIS BOOK
+---
 
-You do not just gain formulas. You gain a **worldview**.
+## FINAL LECTURE SYNTHESIS
 
-You stop thinking:
+### LECTURE 1 – ML IS FUNCTION LEARNING
 
-- ❌ ML = curve fitting  
-- ❌ ML = accuracy numbers  
-- ❌ ML = black-box neural nets  
+Experience → Functions → Prediction
 
-You start thinking:
+---
 
-- ✅ Models are **probabilistic beliefs**  
-- ✅ Learning = **Bayesian inference under uncertainty**  
-- ✅ Data is finite; perfect truth is unreachable  
-- ✅ Overfitting = self-delusion  
-- ✅ Regularization is discipline  
-- ✅ Good ML = chance + probability + geometry + optimization  
+### LECTURE 2 – DOUBLE DESCENT
 
+Underfit → optimal fit → interpolation spike → over-parametrized recovery
 
-# final 
+Size ≠ overfitting.  
+**Solution smoothness matters more than capacity.**
 
+---
 
+### LECTURE 3 – ROBUSTNESS FAILURES
+
+ML fails when assumptions break:
+
+| Risk | Cause |
+|------|--------|
+| Open world | Unknown classes |
+| Non-IID | Distribution shifts |
+| Small / noisy data | Label errors |
+
+---
+
+### LECTURE 4 – PHILOSOPHICAL FAILURE
+
+- Black-box fragility
+- No causal reasoning
+- Misaligned objectives
+
+---
+
+### LECTURE 5 – PHILOSOPHY-INFORMED ML
+
+Future models integrate:
+
+- Epistemology
+- Formal logic
+- Causality
+- Constraint reasoning
+
+---
+
+---
+
+## CORE TAKEAWAYS
+
+- Overfitting ≠ big models
+- Robustness fails under open worlds and dataset shifts
+- ML learns correlations, not causes
+- Next generation ML blends **data + logic + causality + ethics**
