@@ -820,3 +820,7 @@ You start thinking:
 - ✅ Regularization is discipline  
 - ✅ Good ML = chance + probability + geometry + optimization  
 
+
+# final 
+
+
