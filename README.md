@@ -546,3 +546,47 @@ not truths of persons.
 - Domain shifts break predictions.
 - Online learning never settles.
 - The future of ML blends **Data + Causality + Ethics**.
+
+Machine learning learns statistical habits of groups, not the essence of individuals.
+
+
+# References and Further Reading
+Core Theory Books
+
+Shai Shalev-Shwartz and Shai Ben-David.
+Understanding Machine Learning: From Theory to Algorithms. Cambridge University Press, 2014.
+
+Tom M. Mitchell.
+Machine Learning. McGraw Hill, 1997.
+
+Christopher M. Bishop.
+Pattern Recognition and Machine Learning. Springer, 2006.
+
+Kevin P. Murphy.
+Probabilistic Machine Learning: An Introduction. MIT Press, 2022.
+
+Classic Papers and Theory
+
+Vladimir N. Vapnik.
+Statistical Learning Theory. Wiley, 1998.
+
+David H. Wolpert.
+"The Lack of A Priori Distinctions Between Learning Algorithms."
+Neural Computation, 1996. (No Free Lunch theorem)
+
+Leo Breiman.
+"Random Forests."
+Machine Learning, 45(1), 2001.
+
+Mikhail Belkin, Daniel Hsu, Siyuan Ma, and Soumik Mandal.
+"Reconciling Modern Machine Learning and the Bias-Variance Trade-off."
+Proceedings of the National Academy of Sciences, 2019. (Double descent and capacity)
+
+Dataset Source
+
+Paulo Cortez and Alice Silva.
+"Using Data Mining to Predict Secondary School Student Performance."
+In Proceedings of Future Business Technology Conference, 2008.
+Dataset: UCI Machine Learning Repository, "Student Performance".
+
+------------------
