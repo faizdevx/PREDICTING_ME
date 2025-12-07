@@ -595,3 +595,204 @@ G3 → Outcome
 
 Can a student’s daily life predict their future outcome?
 
+## shape !
+
+Rows: 649 students
+
+Columns: 33 features
+
+## types of data
+
+Numeric (int64): 16 columns
+age, Medu, Fedu, traveltime, studytime, failures, famrel, freetime, goout, Dalc, Walc, health, absences, G1, G2, G3
+
+## categorical
+
+Numeric (int64): 16 columns
+age, Medu, Fedu, traveltime, studytime, failures, famrel, freetime, goout, Dalc, Walc, health, absences, G1, G2, G3
+
+### what to do 
+OneHotEncode the object columns
+
+Scale the numeric ones
+
+
+## what does stats show 
+
+age- mostly normal high school student few older(repeaters)
+
+parent education - most parent atleast middle or secondory school 
+
+family and lifestyle score-
+
+famrel ≈ 3.93 → family relations mostly good
+
+freetime ≈ 3.18 → moderate free time
+
+goout ≈ 3.18 → average social life
+
+Dalc ≈ 1.5, Walc ≈ 2.28 → weekday drinking low, weekend higher
+
+health ≈ 3.53 → general health okay
+
+Absences-
+
+Most students do not skip a lot, but a few are specialists in vanishing.
+
+column skewed and small group is very absent!!
+
+Grades distribution-
+
+All out of 20:
+
+G1 mean ≈ 11.40
+
+G2 mean ≈ 11.57
+
+G3 mean ≈ 11.91
+
+Min 0, max 19
+
+
+# model pipeline
+
+preprocessor
+|
+|
+|
+cat,num
+|
+|
+|
+Linear_Regression model 
+
+
+LinearRegression()
+
+This says:
+
+"Final grade = weighted sum of every feature."
+
+The model learns:
+
+G3 ≈ w1*age 
+    + w2*failures
+    + w3*studytime
+    + ...
+    + wN*school_MS
+
+
+It believes:
+
+Every feature has a fixed contribution.
+
+All effects add up linearly.
+
+No secret interactions or fancy nonlinear boosts
+
+
+# visualization
+
+![g3 vs students](image.png)
+
+![g1 vs g3](image-1.png)
+
+![g2 vs g3](image-2.png)
+
+![study time vs g3](image-3.png)
+
+
+![absensee vs g3](image-4.png)
+
+![weekend_alcohol vs g3](image-5.png)
+
+![correlation](image-6.png)
+
+
+# what next
+
+pipeline done 
+now binary classification 
+
+features choosing 
+
+now train val diff diff
+
+clf.fit 
+
+evaluate 
+
+# accuracy of it 
+
+Baseline Linear Regression Accuracy: 0.8923076923076924
+
+![pass vs student index](image-7.png)
+
+This graph shows accuracy bias:
+
+High accuracy does not mean high understanding.
+
+Your model isn’t analyzing individuals deeply.
+It discovered a lazy policy:
+
+Predict PASS unless something screams FAIL.
+
+
+✅ Hypothesis 1 — Correlation
+
+Correlation exists:
+Your model beats randomness strongly.
+
+✅ Hypothesis 5 — Noise / Irreducible Error
+
+This scatter chaos directly demonstrates:
+
+Even with “good” features, prediction is capped by invisible variables.
+
+Your ceiling is nowhere near 100%.
+
+❌ Partial confirmation of Hypothesis 4
+
+If the model fails THIS badly on known data, imagine population shift.
+
+You’d get worse collapse.
+
+WHY THE LINE PLOT LOOKED BORING
+
+Remember you asked for:
+
+“Line and features vs predicted output”
+
+You only saw nearly flat lines because:
+
+Linear regression assigns small weights.
+
+Your features offer limited discrimination.
+
+Most predictions cluster near pass probability = 0.9.
+
+The slopes exist, they’re simply shallow.
+
+No dramatic gradient because:
+
+Most students don't differ much along your selected dimensions.
+
+Which is a sociological reality check.
+
+
+didn’t build a "classifier".
+
+You built an averaging machine.
+
+The model doesn't know why a student fails.
+
+It only knows:
+
+Most students pass.
+
+So it rarely dares to predict failure.
+
+This is the tyranny of dataset imbalance + shallow features.
+
+
+# what next 
